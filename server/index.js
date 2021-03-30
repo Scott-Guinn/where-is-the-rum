@@ -1,3 +1,5 @@
+const { API_KEY } = require('../config.js');
+
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
