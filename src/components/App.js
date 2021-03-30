@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Login from './Login.js';
 import Compass from './Compass.js';
 import styles from '../index.css';
 
 const App = () => {
-  const [position, setPosition] = useState({ lat: '', lng: '' })
+  const [userInfo, setUserInfo] = useState({username: '', wantMost: 'rum'});
+  const [position, setPosition] = useState({ lat: '', lng: '' });
   const [bearing, setBearing] = useState(0);
 
   const getMyPosition = async () => {
     console.log('getMyPosition has been called');
-    if (confirm('Allow location to be shared?')) {
-
       // check if browser supports Geolocation
       if (!navigator.geolocation) {
         console.error(`Your browser is preventing you from locating what you want most. Please enable location services.`);
@@ -29,7 +29,6 @@ const App = () => {
       }
 
       await navigator.geolocation.getCurrentPosition(onSuccess, () => console.log(`Failed to get your location!`));
-    }
   }
 
   // for future (mobile) implementation
@@ -50,10 +49,10 @@ const App = () => {
 
   }
 
-  const getNearestBar = (myLocation) => {
-    if (myLocation.lat !== '' && myLocation.lng !== '') {
+  const getNearest = () => {
+    if (position.lat !== '' && position.lng !== '') {
       console.log('GET request made to server');
-      axios.post(`http://localhost:8000/`, myLocation)
+      axios.post(`http://localhost:8000/`, {position: position, wantMost: userInfo.wantMost})
         .then(({ data }) => {
           console.log('response: ', data);
           setBearing(data.bearing);
@@ -66,11 +65,13 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    getNearestBar(position);
-  }, [position])
+    getNearest();
+  }, [userInfo, position])
 
   return (
     <div style={{ display: "flex", justifyContent: "center"}} >
+      {userInfo.username === '' ?
+      <Login setUserInfo={setUserInfo}/> : null }
       <Compass bearing={bearing} />
     </div>
   )

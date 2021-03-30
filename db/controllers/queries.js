@@ -5,7 +5,7 @@ const User = require('../models/user.js');
 const { calculateBearing } = require('../../helpers/calculateBearing.js');
 
 const addUser = (req, res) => {
-  const newUser = new User({ username: req.body.username });
+  const newUser = new User({ username: req.body.username, wantMost: req.body.wantMost });
 
   newUser.save()
     .then((response) => {
@@ -17,16 +17,19 @@ const addUser = (req, res) => {
 }
 
 const getNearest = (req, res) => {
-  console.log('getNearest has been called.\nreq.body: ', req.body);
+  console.log('req.body: ', req.body);
+  console.log('what does user want most: ', req.body.wantMost);
+  var wantMost = req.body.wantMost;
+  if (wantMost.length === 0) {
+    wantMost = 'rum';
+  }
+  const query = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=${API_KEY}&input="${wantMost}"&inputtype=textquery&fields=formatted_address,name,geometry`;
 
-  axios.get(`https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=${API_KEY}&input=bar&inputtype=textquery&fields=formatted_address,name,geometry`)
+  axios.get(query)
     .then((response) => {
-      console.log('response from Google Places API: ', response.data.candidates)
-      console.log('HERE', response.data.candidates[0].geometry);
+      const bearing = calculateBearing(req.body.position, response.data.candidates[0].geometry.location);
 
-      const bearing = calculateBearing(req.body, response.data.candidates[0].geometry.location);
-
-      res.send({bearing: bearing});
+      res.send({ bearing: bearing });
     })
 }
 
