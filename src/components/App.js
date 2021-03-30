@@ -56,6 +56,7 @@ const App = () => {
       axios.post(`http://localhost:8000/`, myLocation)
         .then(({ data }) => {
           console.log('response: ', data);
+          setBearing(data.bearing);
         })
     }
   }

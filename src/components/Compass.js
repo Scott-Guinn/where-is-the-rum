@@ -14,6 +14,7 @@ const Compass = ({ bearing }) => {
             zIndex: '2',
             right: "15%",
             top: '55%',
+            transition: 'transform 4s',
             transform: `rotate(${bearing}deg)`,
 
           }}
