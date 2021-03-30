@@ -70,10 +70,7 @@ const App = () => {
   }, [position])
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }} >
-      {console.log('current position: ', position)}
-      Where is the rum? Ah here it is...
-
+    <div style={{ display: "flex", justifyContent: "center"}} >
       <Compass bearing={bearing} />
     </div>
   )
