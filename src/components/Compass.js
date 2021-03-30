@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from 'react';
 
-const Compass = ({bearing}) => {
+const Compass = ({ bearing }) => {
   return (
-    <div>
+    <div style={{position: 'relative'}}>
       <img src='../../public/full_compass.png'
-      style={{
-        position: 'absolute',
-        zIndex: '1',
-        right: "30%",
-      }} />
-      <img src='../../public/circle_compass.png'
-      style={{
-        position: 'absolute',
-        zIndex: '2',
-        right: "34.5%",
-        top: '49.75%',
-        transform: `rotate(${bearing}deg)`,
+        style={{
+          position: 'relative',
+          zIndex: '1',
+        }}/>
+        <img src='../../public/circle_compass.png'
+          style={{
+            position: 'absolute',
+            zIndex: '2',
+            right: "15%",
+            top: '55%',
+            transform: `rotate(${bearing}deg)`,
 
-      }}
-       />
+          }}
+        />
     </div>
   )
 }
