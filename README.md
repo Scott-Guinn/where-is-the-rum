@@ -15,7 +15,7 @@
 
 ## Quote from You ##
   > "This will lead you to freedom, mate."
-    ―Captain Jack Sparrow on the Compass
+    ―Captain Jack Sparrow on 'Where-is-the-rum?'
 
 ## How to Get Started ##
   > Flip open the compass, allow location services, and you're in.
@@ -26,4 +26,4 @@
       ― Robert Greene and Jack Sparrow
 
 ## Closing and Call to Action ##
-  > Not all who wander are lost. Follow the compass and you'll ask yourself where-is-the-rum? no longer!
+  > Not all who wander are lost. Follow the compass and you'll ask yourself "Where-is-the-rum?" no longer!
