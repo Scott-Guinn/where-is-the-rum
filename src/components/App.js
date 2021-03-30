@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Compass from './Compass.js';
+import styles from '../index.css';
 
 const App = () => {
   const [position, setPosition] = useState({ lat: '', lng: '' })
@@ -24,6 +26,23 @@ const App = () => {
     await navigator.geolocation.getCurrentPosition(onSuccess, () => console.log(`Failed to get your location!`));
   }
 
+  const getOrientation = () => {
+    // FUTURE FEATURE
+    if(!window.DeviceOrientationEvent) {
+      console.log('Browser does not support device orientation');
+      // go to bearing mode
+    } else {
+      console.log('browser allows DeviceOrientationEvent');
+      window.addEventListener('deviceorientation', function(event) {
+        var alpha = event.alpha;
+        var beta = event.beta;
+        var gamma = event.gamma;
+        console.log('alpha, beta, gamma: ', alpha, beta, gamma)
+      }, false);
+    }
+
+  }
+
   const getNearestBar = (myLocation) => {
     if (myLocation.lat !== '' && myLocation.lng !== '') {
       console.log('GET request made to server');
@@ -40,12 +59,15 @@ const App = () => {
 
   useEffect(() => {
     getNearestBar(position);
+    getOrientation();
   }, [position])
 
   return (
-    <div>
+    <div style={{display: "flex", justifyContent: "center"}} >
       {console.log('current position: ', position)}
-      Where is the rum? Ah here it is
+      Where is the rum? Ah here it is...
+
+      <Compass />
     </div>
   )
 }
