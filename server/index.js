@@ -13,9 +13,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.get('/', queries.getNearest)
+app.post('/', queries.getNearest)
 
-app.post('/', queries.addUser)
+// app.post('/', queries.addUser)
 
 app.listen(PORT, () => {
   console.log(`Server listening at localhost:${PORT}!`);

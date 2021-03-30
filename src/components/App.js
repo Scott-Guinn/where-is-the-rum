@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const App = () => {
-  const [position, setPosition] = useState({ lat: '', long: '' })
+  const [position, setPosition] = useState({ lat: '', lng: '' })
 
   const getMyPosition = async () => {
-
+    // check if browser supports Geolocation
     if (!navigator.geolocation) {
-      console.error(`Your browser doesn't support Geolocation`);
+      console.error(`Your browser is preventing you from locating what you want most. Please enable location services.`);
     }
 
     // handle success case
@@ -16,20 +17,30 @@ const App = () => {
         longitude
       } = position.coords;
 
-      setPosition({ lat: latitude, long: longitude });
+      setPosition({ lat: latitude, lng: longitude });
       console.log(`Your location: (${latitude},${longitude})`);
     }
 
-    // handle error case
-    function onError() {
-      console.log(`Failed to get your location!`);
+    await navigator.geolocation.getCurrentPosition(onSuccess, () => console.log(`Failed to get your location!`));
+  }
+
+  const getNearestBar = (myLocation) => {
+    if (myLocation.lat !== '' && myLocation.lng !== '') {
+      console.log('GET request made to server');
+      axios.post(`http://localhost:8000/`, myLocation)
+      .then(({data}) => {
+        console.log('response: ', data);
+      })
     }
-    await navigator.geolocation.getCurrentPosition(onSuccess, onError);
   }
 
   useEffect(() => {
     getMyPosition();
   }, []);
+
+  useEffect(() => {
+    getNearestBar(position);
+  }, [position])
 
   return (
     <div>
