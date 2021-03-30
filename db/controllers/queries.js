@@ -30,9 +30,14 @@ const getNearest = (req, res) => {
   axios.get(query)
     .then((response) => {
       console.log('googleMaps response: ', response.data);
-      const bearing = calculateBearing(req.body.position, response.data.candidates[0].geometry.location);
+      if (response.data.candidates.length === 0) {
+        res.sendStatus(404);
+      } else {
 
-      res.send({ bearing: bearing });
+        const bearing = calculateBearing(req.body.position, response.data.candidates[0].geometry.location);
+
+        res.send({ bearing: bearing });
+      }
     })
 }
 

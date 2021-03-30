@@ -1,0 +1,17 @@
+
+@keyframes spin {
+  0% {
+    transform: rotateZ(0);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+.compass {
+  position: absolute;
+  z-index: 2;
+  right: 12%;
+  top: 53%;
+  transition: transform 4s;
+}

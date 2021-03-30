@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from 'react';
+import './compass.css';
 
-const Compass = ({ bearing }) => {
+const Compass = ({ bearing, spin }) => {
+  var compassStyle;
+  if (spin) {
+    compassStyle = {
+      animation: "spin 10s linear infinite"
+    }
+  } else {
+    compassStyle = {
+      transform: `rotate(${bearing}deg)`
+    }
+  }
+
   return (
-    <div style={{position: 'relative'}}>
+    <div style={{ position: 'relative' }}>
       <img src='../../public/new_compass.png'
         style={{
           position: 'relative',
           zIndex: '1',
-        }}/>
-        <img src='../../public/circle_compass.png'
-          style={{
-            position: 'absolute',
-            zIndex: '2',
-            right: "12%",
-            top: '53%',
-            transition: 'transform 4s',
-            transform: `rotate(${bearing}deg)`,
-
-          }}
-        />
+        }} />
+      <img src='../../public/circle_compass.png'
+        className="compass"
+        style={compassStyle}
+      />
     </div>
   )
 }
