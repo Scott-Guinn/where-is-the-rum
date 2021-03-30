@@ -5,8 +5,10 @@ import styles from '../index.css';
 
 const App = () => {
   const [position, setPosition] = useState({ lat: '', lng: '' })
+  const [bearing, setBearing] = useState(0);
 
   const getMyPosition = async () => {
+    console.log('getMyPosition has been called');
     // check if browser supports Geolocation
     if (!navigator.geolocation) {
       console.error(`Your browser is preventing you from locating what you want most. Please enable location services.`);
@@ -14,6 +16,7 @@ const App = () => {
 
     // handle success case
     function onSuccess(position) {
+      console.log('success!');
       const {
         latitude,
         longitude
@@ -26,6 +29,7 @@ const App = () => {
     await navigator.geolocation.getCurrentPosition(onSuccess, () => console.log(`Failed to get your location!`));
   }
 
+  // for future (mobile) implementation
   const getOrientation = () => {
     // FUTURE FEATURE
     if(!window.DeviceOrientationEvent) {
@@ -59,7 +63,6 @@ const App = () => {
 
   useEffect(() => {
     getNearestBar(position);
-    getOrientation();
   }, [position])
 
   return (
@@ -67,7 +70,7 @@ const App = () => {
       {console.log('current position: ', position)}
       Where is the rum? Ah here it is...
 
-      <Compass />
+      <Compass bearing={bearing} />
     </div>
   )
 }
