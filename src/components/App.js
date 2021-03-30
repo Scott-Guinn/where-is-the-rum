@@ -49,13 +49,25 @@ const App = () => {
 
   }
 
+  /* this function is buggy, removed for now */
+  const toggleBearing = (bearing) => {
+    console.log('toggleBearing has been called');
+    setBearing(bearing + 30)
+    setInterval(()=> {
+      setBearing(bearing - 15);
+      setInterval(()=> setBearing(bearing), 3000);
+    }, 3000);
+  }
+
   const getNearest = () => {
     if (position.lat !== '' && position.lng !== '') {
       console.log('GET request made to server');
       axios.post(`http://localhost:8000/`, {position: position, wantMost: userInfo.wantMost})
         .then(({ data }) => {
           console.log('response: ', data);
+          console.log('data.bearing: ', data.bearing);
           setBearing(data.bearing);
+          // toggleBearing(data.bearing);
         })
     }
   }

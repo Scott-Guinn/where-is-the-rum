@@ -21,7 +21,7 @@ const Login = ({setUserInfo}) => {
         <label type="text" htmlFor="name">Who goes there?</label><br/>
         <input type="text" value={name} placeholder="Captain Jack Sparrow" onChange={(e) => setName(e.target.value)}name="name"/><br/>
 
-        <label type="text" htmlFor="name">Ye think ya know better than this here compass? Enter what you want most in this world below.</label><br/>
+        <label type="text" htmlFor="name">Ye think ya know better than this here compass? <br/>Enter what you want most in this world below.</label><br/>
         <input type="text" value={wantMost} placeholder="Rum" onChange={(e) => setWantMost(e.target.value)} name="name"/>
 
         <button style={{width: "50px", height: "20px"}}title="Open" onClick={(e) => handleSubmit(e)} />
