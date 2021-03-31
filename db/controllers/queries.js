@@ -17,7 +17,6 @@ const addUser = (req, res) => {
 }
 
 const getNearest = (req, res) => {
-  console.log('CLIENT POSITION: ', req.body.position);
   const {lat, lng} = req.body.position;
   var wantMost = req.body.wantMost;
   if (wantMost.length === 0) {
@@ -25,11 +24,9 @@ const getNearest = (req, res) => {
   }
   const query = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=${API_KEY}&input="${wantMost}"&inputtype=textquery&fields=formatted_address,name,geometry&locationbias=point:${lat},${lng}47.6918452,-122.2226413`;
 
-  console.log('query: ', query);
 
   axios.get(query)
     .then((response) => {
-      console.log('googleMaps response: ', response.data);
       if (response.data.candidates.length === 0) {
         res.sendStatus(404);
       } else {

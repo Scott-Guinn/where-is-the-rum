@@ -14,7 +14,6 @@ const App = () => {
   const [spin, setSpin] = useState(false);
 
   const getMyPosition = async () => {
-    console.log('getMyPosition has been called');
     // check if browser supports Geolocation
     if (!navigator.geolocation) {
       console.error(`Your browser is preventing you from locating what you want most. Please enable location services.`);
@@ -23,7 +22,6 @@ const App = () => {
 
     // handle success case
     function onSuccess(position) {
-      console.log('success!');
       const {
         latitude,
         longitude
@@ -72,8 +70,7 @@ const App = () => {
       console.log('GET request made to server');
       axios.post(`http://localhost:8000/`, { position: position, wantMost: userInfo.wantMost })
         .then(({ data }) => {
-          console.log('response: ', data);
-          console.log('data.bearing: ', data.bearing);
+          console.log('bearing to destination: ', data.bearing);
           setBearing(data.bearing);
           // toggleBearing(data.bearing);
         }).catch((err) => {
@@ -92,7 +89,15 @@ const App = () => {
   }, [userInfo, position])
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", position: "relative"}} >
+    <div
+      style={{
+        backgroundImage: `url("../../public/stained_bkg.jpg")`, backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        display: "flex",
+        justifyContent: "center",
+        position: "relative"
+      }} >
+
       {showLogin ?
         <Login setUserInfo={setUserInfo} setShowLogin={setShowLogin} showLogin={showLogin} /> : null}
       <Compass bearing={bearing} spin={spin} />
@@ -100,7 +105,7 @@ const App = () => {
         <Button className="hiddenButton" onClick={() => {
           setShowLogin(!showLogin);
           console.log('hidden button clicked')
-          }} />
+        }} />
       </div>
     </div>
   )
