@@ -16,6 +16,6 @@ app.use(express.static(path.join(__dirname, '..', 'src')));
 app.post('/', queries.getNearest);
 app.post('/newUser', queries.addUser);
 
-app.listen(process.env.PORT || 8000, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server listening at localhost:${PORT}!`);
 });
