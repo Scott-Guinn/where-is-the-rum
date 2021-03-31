@@ -3,3 +3,13 @@
   justify-content: center;
   align-content: center;
 } */
+
+.hiddenButton {
+  width: 220px;
+    height: 220px;
+    position: absolute;
+    z-index: 1;
+    top: 12%;
+    left: 41%;
+    opacity: 0;
+}

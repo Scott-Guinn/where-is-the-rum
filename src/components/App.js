@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Login from './Login.js';
 import Compass from './Compass.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button';
 import styles from '../index.css';
 
 const App = () => {
   const [userInfo, setUserInfo] = useState({ username: '', wantMost: 'rum' });
   const [position, setPosition] = useState({ lat: '', lng: '' });
   const [bearing, setBearing] = useState(0);
+  const [showLogin, setShowLogin] = useState(false);
   const [spin, setSpin] = useState(false);
 
   const getMyPosition = async () => {
@@ -89,10 +92,16 @@ const App = () => {
   }, [userInfo, position])
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }} >
-      {userInfo.username === '' ?
-        <Login setUserInfo={setUserInfo} /> : null}
+    <div style={{ display: "flex", justifyContent: "center", position: "relative"}} >
+      {showLogin ?
+        <Login setUserInfo={setUserInfo} setShowLogin={setShowLogin} showLogin={showLogin} /> : null}
       <Compass bearing={bearing} spin={spin} />
+      <div>
+        <Button className="hiddenButton" onClick={() => {
+          setShowLogin(!showLogin);
+          console.log('hidden button clicked')
+          }} />
+      </div>
     </div>
   )
 }
