@@ -11,7 +11,7 @@ const Login = ({ setUserInfo, setShowLogin, showLogin }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('handleSumbit called', name, wantMost);
-    axios.post('localhost:8000/newUser', { username: name, wantMost: wantMost })
+    axios.post('http://localhost:8000/newUser', { username: name, wantMost: wantMost })
       .then((res) => {
         console.log('response from server: ', res);
         setUserInfo({ username: name, wantMost: wantMost });
