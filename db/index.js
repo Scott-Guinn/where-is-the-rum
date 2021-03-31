@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/rum', { useNewUrlParser: true, useUnifiedTopology: true });
+const URI = process.env.MONGODB_URI || 'mongodb://localhost/rum';
+
+mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
