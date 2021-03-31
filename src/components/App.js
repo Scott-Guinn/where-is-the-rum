@@ -68,7 +68,7 @@ const App = () => {
   const getNearest = () => {
     if (position.lat !== '' && position.lng !== '') {
       console.log('GET request made to server');
-      axios.post(`http://localhost:8000/`, { position: position, wantMost: userInfo.wantMost })
+      axios.post(`localhost:8000/`, { position: position, wantMost: userInfo.wantMost })
         .then(({ data }) => {
           console.log('bearing to destination: ', data.bearing);
           setBearing(data.bearing);

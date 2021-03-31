@@ -11,7 +11,7 @@ const Login = ({ setUserInfo, setShowLogin, showLogin }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('handleSumbit called', name, wantMost);
-    axios.post('http://localhost:8000/newUser', { username: name, wantMost: wantMost })
+    axios.post('localhost:8000/newUser', { username: name, wantMost: wantMost })
       .then((res) => {
         console.log('response from server: ', res);
         setUserInfo({ username: name, wantMost: wantMost });
@@ -42,13 +42,6 @@ const Login = ({ setUserInfo, setShowLogin, showLogin }) => {
             <Form.Label>And what is it that you're lookin' for?</Form.Label>
             <Form.Control type="text" placeholder="Rum" value={wantMost} onChange={(e) => setWantMost(e.target.value)}/>
           </Form.Group>
-
-
-            {/* <label type="text" htmlFor="name">Who goes there?</label><br />
-            <input type="text" value={name} placeholder="Captain Jack Sparrow" onChange={(e) => setName(e.target.value)} name="name" /><br />
-
-            <label type="text" htmlFor="name">Ye think ya know better than this here compass? <br />Enter what you want most in this world below.</label><br />
-            <input type="text" value={wantMost} placeholder="Rum" onChange={(e) => setWantMost(e.target.value)} name="name" /> */}
 
             <Button variant="secondary" onClick={(e) => handleSubmit(e)}>Enter</Button>
 
