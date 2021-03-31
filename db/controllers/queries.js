@@ -1,6 +1,6 @@
 const db = require('../index.js');
 const axios = require('axios');
-const localkey = require('../../config.js').API_KEY;
+// const localkey = require('../../config.js').API_KEY;
 const API_KEY = process.env.API_KEY || localkey;
 const User = require('../models/user.js');
 const { calculateBearing } = require('../../helpers/calculateBearing.js');
