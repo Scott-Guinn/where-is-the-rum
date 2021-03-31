@@ -91,7 +91,7 @@ const App = () => {
   return (
     <div
       style={{
-        backgroundImage: `url("../../public/stained_bkg.jpg")`, backgroundRepeat: "no-repeat",
+        backgroundImage: `url("./stained_bkg.jpg")`, backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         display: "flex",
         justifyContent: "center",
