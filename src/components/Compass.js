@@ -5,7 +5,7 @@ const Compass = ({ bearing, spin }) => {
   var compassStyle;
   if (spin) {
     compassStyle = {
-      animation: "spin 10s linear infinite"
+      animation: "spin 7s linear infinite"
     }
   } else {
     compassStyle = {

@@ -28,21 +28,15 @@ const getNearest = (req, res) => {
 
   axios.get(query)
     .then((response) => {
-      if (response.data.candidates.length === 0) {
-        res.sendStatus(404);
-      } else {
-
         const bearing = calculateBearing(req.body.position, response.data.candidates[0].geometry.location);
 
-        User.find().then((response) => {
-          console.log('response from database: ', response);
+        User.find().limit(20).then((response) => {
           res.send({ bearing: bearing, desires: response });
         }).catch((err) => {
           console.log('err finding desires in db: ', err)
           res.send({ bearing: bearing, desires: [] });
         })
 
-      }
     }).catch((err) => {
       console.error('problem with GoogleAPI request: ', err);
     })

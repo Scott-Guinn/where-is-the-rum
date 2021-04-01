@@ -101,7 +101,6 @@ const App = () => {
         display: "flex",
         justifyContent: "center",
         position: "relative",
-        width: "max-content",
       }} >
 
       {showLogin ?
@@ -110,12 +109,12 @@ const App = () => {
       }
 
       {showDesires ?
-       <Desires setShowDesires={setShowDesires} showDesires={showDesires} desires={desires}
-       />
-       : null
+        <Desires setShowDesires={setShowDesires} showDesires={showDesires} desires={desires}
+        />
+        : null
       }
 
-      <Compass bearing={bearing} spin={spin} />
+        <Compass bearing={bearing} spin={spin} />
       <div>
         <Button className="hiddenButton1" onClick={() => {
           setShowLogin(!showLogin);

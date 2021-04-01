@@ -15,6 +15,9 @@ const Login = ({ setUserInfo, setShowLogin, showLogin }) => {
       .then((res) => {
         console.log('response from server: ', res);
         setUserInfo({ username: name, wantMost: wantMost });
+        setName('');
+        setWantMost('');
+        setShowLogin(false);
       })
   }
 
