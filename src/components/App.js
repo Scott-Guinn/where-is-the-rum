@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Splash from './Splash.js';
 import Login from './Login.js';
 import Desires from './Desires.js';
 import Compass from './Compass.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 import Button from 'react-bootstrap/Button';
+import Fade from 'react-bootstrap/Fade'
 import styles from '../index.css';
 
 const App = () => {
+  const [loading, setLoading] = useState(true);
+
   const [userInfo, setUserInfo] = useState({ username: '', wantMost: 'rum' });
   const [desires, setDesires] = useState([]);
   const [position, setPosition] = useState({ lat: '', lng: '' });
@@ -15,6 +21,12 @@ const App = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showDesires, setShowDesires] = useState(false);
   const [spin, setSpin] = useState(false);
+
+  const backgroundImageStyle = {
+    display: "flex",
+    justifyContent: "center",
+    position: "relative",
+  }
 
   const getMyPosition = async () => {
     // check if browser supports Geolocation
@@ -31,6 +43,7 @@ const App = () => {
       } = position.coords;
 
       setPosition({ lat: latitude, lng: longitude });
+      setLoading(false);
       console.log(`Your location: (${latitude},${longitude})`);
     }
 
@@ -70,10 +83,9 @@ const App = () => {
 
   const getData = () => {
     if (position.lat !== '' && position.lng !== '') {
-      console.log('GET request made to server');
       axios.post(`http://localhost:8000/`, { position: position, wantMost: userInfo.wantMost })
         .then(({ data }) => {
-          console.log('bearing to destination: ', data.bearing);
+          console.log('Bearing to destination: ', data.bearing);
           setBearing(data.bearing);
           setDesires(data.desires);
           console.log('desires: ', data.desires);
@@ -93,15 +105,12 @@ const App = () => {
     getData();
   }, [userInfo, position])
 
+  if (loading) {
+    return <Splash />
+  }
+
   return (
-    <div
-      style={{
-        backgroundImage: `url("./stained_bkg.jpg")`, backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        display: "flex",
-        justifyContent: "center",
-        position: "relative",
-      }} >
+    <div>
 
       {showLogin ?
         <Login setUserInfo={setUserInfo} setShowLogin={setShowLogin} showLogin={showLogin} />
@@ -113,17 +122,36 @@ const App = () => {
         />
         : null
       }
+      <Compass bearing={bearing} spin={spin} />
 
-        <Compass bearing={bearing} spin={spin} />
       <div>
-        <Button className="hiddenButton1" onClick={() => {
-          setShowLogin(!showLogin);
-          console.log('hidden button 1 clicked')
-        }} />
-        <Button className="hiddenButton2" onClick={() => {
-          setShowDesires(!showDesires);
-          console.log('hidden button 2 clicked')
-        }} />
+
+        <OverlayTrigger
+          placement='left'
+          overlay={
+            <Tooltip id={`tooltip-login`}>
+              "A compass that doesn't point North...
+              But we're not trying to find North, are we?"
+            </Tooltip>
+          }
+        >
+          <Button className="hiddenButton1" onClick={() => {
+            setShowLogin(!showLogin);
+          }} />
+        </OverlayTrigger>
+
+        <OverlayTrigger
+          placement='left'
+          overlay={
+            <Tooltip id={`tooltip-desires`}>
+              "Not all treasure's silver and gold, mate.""
+            </Tooltip>
+          }
+        >
+          <Button className="hiddenButton2" onClick={() => {
+            setShowDesires(!showDesires);
+          }} />
+        </OverlayTrigger>
       </div>
     </div>
   )

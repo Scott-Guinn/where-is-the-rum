@@ -14,16 +14,16 @@ const Compass = ({ bearing, spin }) => {
   }
 
   return (
-    <div style={{ position: 'relative' }}>
-      <img src='./new_compass.png'
-        style={{
-          position: 'relative',
-          zIndex: '1',
-        }} />
-      <img src='./circle_compass.png'
-        className="compass"
-        style={compassStyle}
-      />
+    <div className="fadeIn" style={{ position: 'relative' }}>
+        <img src='./new_compass.png'
+          style={{
+            position: 'relative',
+            zIndex: '1',
+          }} />
+        <img src='./circle_compass.png'
+          className="compass"
+          style={compassStyle}
+        />
     </div>
   )
 }
