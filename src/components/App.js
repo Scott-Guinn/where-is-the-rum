@@ -8,7 +8,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import Button from 'react-bootstrap/Button';
-import Fade from 'react-bootstrap/Fade'
 import styles from '../index.css';
 
 const App = () => {
@@ -83,7 +82,7 @@ const App = () => {
 
   const getData = () => {
     if (position.lat !== '' && position.lng !== '') {
-      axios.post(`https://salty-beyond-02367.herokuapp.com:8000/`, { position: position, wantMost: userInfo.wantMost })
+      axios.post(`http://localhost:8000/`, { position: position, wantMost: userInfo.wantMost })
         .then(({ data }) => {
           console.log('Bearing to destination: ', data.bearing);
           setBearing(data.bearing);
