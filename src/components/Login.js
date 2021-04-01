@@ -12,7 +12,8 @@ const Login = ({ setUserInfo, setShowLogin, showLogin }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('handleSumbit called', name, wantMost);
-    axios.post(`https://salty-beyond-02367.herokuapp.com/newUser`, { username: name, wantMost: wantMost })
+    // use for heroku: https://salty-beyond-02367.herokuapp.com/newUser
+    axios.post(`http://localhost:8000/newUser`, { username: name, wantMost: wantMost })
       .then((res) => {
         console.log('response from server: ', res);
         setUserInfo({ username: name, wantMost: wantMost });
