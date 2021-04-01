@@ -1,7 +1,7 @@
 const db = require('../index.js');
 const axios = require('axios');
 // const {API_KEY_LOCAL} = require('../../config.js');
-const API_KEY = process.env.API_TOKEN;
+const API_KEY = process.env.API_TOKEN || 'AIzaSyDMmOjs8Yp3T8WIDWdObDnAcTfkpot2PXg';
 const User = require('../models/user.js');
 const { calculateBearing } = require('../../helpers/calculateBearing.js');
 
