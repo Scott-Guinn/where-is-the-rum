@@ -85,7 +85,7 @@ const App = () => {
 
   const getData = () => {
     if (position.lat !== '' && position.lng !== '') {
-      axios.post(`http://localhost:${PORT}/`, { position: position, wantMost: userInfo.wantMost })
+      axios.post(`https://salty-beyond-02367.herokuapp.com/newUser`, { position: position, wantMost: userInfo.wantMost })
         .then(({ data }) => {
           console.log('Bearing to destination: ', data.bearing);
           setBearing(data.bearing);
