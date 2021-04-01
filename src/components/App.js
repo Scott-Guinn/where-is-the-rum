@@ -95,7 +95,8 @@ const App = () => {
         backgroundSize: "cover",
         display: "flex",
         justifyContent: "center",
-        position: "relative"
+        position: "relative",
+        width: "max-content",
       }} >
 
       {showLogin ?
