@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Login from './Login.js';
+import Desires from './Desires.js';
 import Compass from './Compass.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
@@ -8,9 +9,11 @@ import styles from '../index.css';
 
 const App = () => {
   const [userInfo, setUserInfo] = useState({ username: '', wantMost: 'rum' });
+  const [desires, setDesires] = useState([]);
   const [position, setPosition] = useState({ lat: '', lng: '' });
   const [bearing, setBearing] = useState(0);
   const [showLogin, setShowLogin] = useState(false);
+  const [showDesires, setShowDesires] = useState(false);
   const [spin, setSpin] = useState(false);
 
   const getMyPosition = async () => {
@@ -65,13 +68,15 @@ const App = () => {
     }, 3000);
   }
 
-  const getNearest = () => {
+  const getData = () => {
     if (position.lat !== '' && position.lng !== '') {
       console.log('GET request made to server');
       axios.post(`http://localhost:8000/`, { position: position, wantMost: userInfo.wantMost })
         .then(({ data }) => {
           console.log('bearing to destination: ', data.bearing);
           setBearing(data.bearing);
+          setDesires(data.desires);
+          console.log('desires: ', data.desires);
           // toggleBearing(data.bearing);
         }).catch((err) => {
           console.log('error in GET request to server: ', err);
@@ -85,7 +90,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    getNearest();
+    getData();
   }, [userInfo, position])
 
   return (
@@ -100,12 +105,25 @@ const App = () => {
       }} >
 
       {showLogin ?
-        <Login setUserInfo={setUserInfo} setShowLogin={setShowLogin} showLogin={showLogin} /> : null}
+        <Login setUserInfo={setUserInfo} setShowLogin={setShowLogin} showLogin={showLogin} />
+        : null
+      }
+
+      {showDesires ?
+       <Desires setShowDesires={setShowDesires} showDesires={showDesires} desires={desires}
+       />
+       : null
+      }
+
       <Compass bearing={bearing} spin={spin} />
       <div>
-        <Button className="hiddenButton" onClick={() => {
+        <Button className="hiddenButton1" onClick={() => {
           setShowLogin(!showLogin);
-          console.log('hidden button clicked')
+          console.log('hidden button 1 clicked')
+        }} />
+        <Button className="hiddenButton2" onClick={() => {
+          setShowDesires(!showDesires);
+          console.log('hidden button 2 clicked')
         }} />
       </div>
     </div>

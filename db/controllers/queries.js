@@ -1,7 +1,8 @@
 const db = require('../index.js');
 const axios = require('axios');
 // const localkey = require('../../config.js').API_KEY;
-let API_KEY = process.env.API_KEY;
+const {API_KEY_LOCAL} = require('../../config.js');
+const API_KEY = process.env.API_KEY;
 const User = require('../models/user.js');
 const { calculateBearing } = require('../../helpers/calculateBearing.js');
 
@@ -18,15 +19,12 @@ const addUser = (req, res) => {
 }
 
 const getNearest = (req, res) => {
-  console.log('localkey: ', localkey);
   const {lat, lng} = req.body.position;
   var wantMost = req.body.wantMost;
   if (wantMost.length === 0) {
     wantMost = 'rum';
   }
-  const query = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=${API_KEY}&input="${wantMost}"&inputtype=textquery&fields=formatted_address,name,geometry&locationbias=point:${lat},${lng}47.6918452,-122.2226413`;
-  console.log('query: ', query);
-
+  const query = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=${API_KEY || API_KEY_LOCAL}&input="${wantMost}"&inputtype=textquery&fields=formatted_address,name,geometry&locationbias=point:${lat},${lng}47.6918452,-122.2226413`;
 
   axios.get(query)
     .then((response) => {
@@ -36,7 +34,14 @@ const getNearest = (req, res) => {
 
         const bearing = calculateBearing(req.body.position, response.data.candidates[0].geometry.location);
 
-        res.send({ bearing: bearing });
+        User.find().then((response) => {
+          console.log('response from database: ', response);
+          res.send({ bearing: bearing, desires: response });
+        }).catch((err) => {
+          console.log('err finding desires in db: ', err)
+          res.send({ bearing: bearing, desires: [] });
+        })
+
       }
     }).catch((err) => {
       console.error('problem with GoogleAPI request: ', err);

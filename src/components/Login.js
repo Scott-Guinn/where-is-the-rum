@@ -26,6 +26,7 @@ const Login = ({ setUserInfo, setShowLogin, showLogin }) => {
         onHide={() => setShowLogin(false)}
         onExited={()=> setShowLogin(false)}
         aria-labelledby="enter-user-info"
+        style={{  overflowY: 'scroll'}}
       >
         <Modal.Header closeButton>
           <Modal.Title id="enter-user-info">
@@ -48,8 +49,6 @@ const Login = ({ setUserInfo, setShowLogin, showLogin }) => {
           </Form>
         </Modal.Body>
       </Modal>
-
-
     </>
   )
 }

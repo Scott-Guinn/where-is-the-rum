@@ -4,12 +4,22 @@
   align-content: center;
 } */
 
-.hiddenButton {
+.hiddenButton1 {
   width: 220px;
-    height: 220px;
-    position: absolute;
-    z-index: 1;
-    top: 12%;
-    left: 41%;
-    opacity: 0;
+  height: 220px;
+  position: absolute;
+  z-index: 1;
+  top: 12%;
+  left: 26%;
+  opacity: 0;
+}
+
+.hiddenButton2 {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  z-index: 4;
+  top: 67.5%;
+  left: 39.5%;
+  opacity: 0;
 }
