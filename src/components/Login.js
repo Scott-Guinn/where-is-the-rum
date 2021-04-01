@@ -7,7 +7,7 @@ import axios from 'axios';
 const Login = ({ setUserInfo, setShowLogin, showLogin }) => {
   const [name, setName] = useState('');
   const [wantMost, setWantMost] = useState('');
-  const PORT = process.env.PORT || 8000;
+  // const PORT = process.env.PORT || 8000;
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -22,7 +22,7 @@ const App = () => {
   const [showDesires, setShowDesires] = useState(false);
   const [spin, setSpin] = useState(false);
 
-  const PORT = process.env.PORT || 8000;
+  // const PORT = process.env.PORT || 8000;
 
   const backgroundImageStyle = {
     display: "flex",
