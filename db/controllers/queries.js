@@ -31,6 +31,7 @@ const getNearest = (req, res) => {
       console.log('data from GOOGLE: ', response.data.candidates[0]);
         const name = response.data.candidates[0].name;
         const bearing = calculateBearing(req.body.position, response.data.candidates[0].geometry.location);
+        console.log('calculateBearing inputs:', req.body.position, response.data.candidates[0].geometry.location);
 
         User.find().limit(20).then((response) => {
           res.send({ bearing: bearing, desires: response, name: name });
