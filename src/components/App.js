@@ -22,6 +22,8 @@ const App = () => {
   const [showDesires, setShowDesires] = useState(false);
   const [spin, setSpin] = useState(false);
 
+  const PORT = process.env.PORT || 8000;
+
   const backgroundImageStyle = {
     display: "flex",
     justifyContent: "center",
@@ -83,7 +85,7 @@ const App = () => {
 
   const getData = () => {
     if (position.lat !== '' && position.lng !== '') {
-      axios.post(`http://localhost:8000/`, { position: position, wantMost: userInfo.wantMost })
+      axios.post(`http://localhost:${PORT}/`, { position: position, wantMost: userInfo.wantMost })
         .then(({ data }) => {
           console.log('Bearing to destination: ', data.bearing);
           setBearing(data.bearing);
