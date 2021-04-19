@@ -1,7 +1,6 @@
 const db = require('../index.js');
 const axios = require('axios');
-// const {API_KEY_LOCAL} = require('../../config.js');
-const API_KEY = "AIzaSyDMmOjs8Yp3T8WIDWdObDnAcTfkpot2PXg";
+const {API_KEY_LOCAL} = require('../../config.js');
 const User = require('../models/user.js');
 const { calculateBearing } = require('../../helpers/calculateBearing.js');
 
@@ -23,7 +22,7 @@ const getNearest = (req, res) => {
   if (wantMost.length === 0) {
     wantMost = 'rum';
   }
-  const query = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=${API_KEY}&input="${wantMost}"&inputtype=textquery&fields=formatted_address,name,geometry&locationbias=point:${lat},${lng}`;
+  const query = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=${API_KEY_LOCAL}&input="${wantMost}"&inputtype=textquery&fields=formatted_address,name,geometry&locationbias=point:${lat},${lng}`;
   console.log('query: ', query);
 
   axios.get(query)
