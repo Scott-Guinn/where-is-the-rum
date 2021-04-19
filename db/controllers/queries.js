@@ -23,7 +23,7 @@ const getNearest = (req, res) => {
   if (wantMost.length === 0) {
     wantMost = 'rum';
   }
-  const query = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=${API_KEY}&input="${wantMost}"&inputtype=textquery&fields=formatted_address,name,geometry&locationbias=point:${lat},${lng}47.6918452,-122.2226413`;
+  const query = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=${API_KEY}&input="${wantMost}"&inputtype=textquery&fields=formatted_address,name,geometry&locationbias=point:${lat},${lng}`;
   console.log('query: ', query);
 
   axios.get(query)
