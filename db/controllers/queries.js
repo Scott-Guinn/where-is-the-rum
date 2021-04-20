@@ -31,7 +31,8 @@ const getNearest = (req, res) => {
   console.log('lat: ', lat, 'lng: ', lng);
   axios.get(query)
     .then((response) => {
-      console.log('data from GOOGLE: ', response.data.candidates[0]);
+      // console.log('data from GOOGLE: ', response.data.candidates[0]);
+      console.log('response from GOOGLE API: ', response.data);
         const name = response.data.candidates[0].name;
         const bearing = calculateBearing(req.body.position, response.data.candidates[0].geometry.location);
         console.log('calculateBearing inputs:', req.body.position, response.data.candidates[0].geometry.location);
