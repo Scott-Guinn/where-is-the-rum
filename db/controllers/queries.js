@@ -18,37 +18,37 @@ const addUser = (req, res) => {
 }
 
 const getNearest = (req, res) => {
-  const {lat, lng} = req.body.position;
-  var wantMost = req.body.wantMost;
-  if (wantMost.length === 0) {
-    wantMost = 'rum';
+  const { lat, lng } = req.body.position;
+  var destination = req.body.wantMost;
+  if (destination.length === 0) {
+    destination = 'rum';
   }
-  const query = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=${API_KEY}&input="${wantMost}"&inputtype=textquery&fields=formatted_address,name,geometry&locationbias=point:${lat},${lng}`;
+  const query = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=${API_KEY}&input="${destination}"&inputtype=textquery&fields=formatted_address,name,geometry&locationbias=point:${lat},${lng}`;
 
-  console.log('query: ', query);
-  console.log('Inputs from client:');
-  console.log('api_key: ', API_KEY);
-  console.log('wantMost: ', wantMost);
-  console.log('lat: ', lat, 'lng: ', lng);
   axios.get(query)
     .then((response) => {
-      // console.log('data from GOOGLE: ', response.data.candidates[0]);
       const destinationLatLong = response.data.candidates[0].geometry.location;
       console.log('response from GOOGLE API: ', response.data);
-        const name = response.data.candidates[0].name;
-        const bearing = calculateBearing(req.body.position, destinationLatLong);
-        const distance = calculateDistance(req.body.position, destinationLatLong);
+      const name = response.data.candidates[0].name;
+      const bearing = calculateBearing(req.body.position, destinationLatLong);
+      const distance = calculateDistance(req.body.position, destinationLatLong);
 
-        User.find().limit(20).then((response) => {
-          res.send({ bearing: bearing, desires: response, name: name, distance: distance });
-        }).catch((err) => {
-          console.log('err finding desires in db: ', err)
-          res.send({ bearing: bearing, desires: [], name: name, distance: distance });
-        })
-
+      res.send({ bearing: bearing, name: name, distance: distance });
     }).catch((err) => {
       console.error('problem with GoogleAPI request: ', err);
+      res.send(err);
     })
+}
+
+// this function has not been fully implemented yet in web or mobile version.
+// saving this code from previous demo for future implementation
+const getDesires = () => {
+  User.find().limit(20).then((response) => {
+    res.send({ bearing: bearing, desires: response, name: name, distance: distance });
+  }).catch((err) => {
+    console.log('err finding desires in db: ', err)
+    res.send({ bearing: bearing, desires: [], name: name, distance: distance });
+  })
 }
 
 module.exports = {
