@@ -3,6 +3,7 @@ const axios = require('axios');
 const API_KEY = process.env.API_KEY;
 const User = require('../models/user.js');
 const { calculateBearing } = require('../../helpers/calculateBearing.js');
+const { calculateDistance } = require('../../helpers/calculateDistance.js');
 
 const addUser = (req, res) => {
   const newUser = new User({ username: req.body.username, wantMost: req.body.wantMost });
@@ -32,16 +33,17 @@ const getNearest = (req, res) => {
   axios.get(query)
     .then((response) => {
       // console.log('data from GOOGLE: ', response.data.candidates[0]);
+      const destinationLatLong = response.data.candidates[0].geometry.location;
       console.log('response from GOOGLE API: ', response.data);
         const name = response.data.candidates[0].name;
-        const bearing = calculateBearing(req.body.position, response.data.candidates[0].geometry.location);
-        console.log('calculateBearing inputs:', req.body.position, response.data.candidates[0].geometry.location);
+        const bearing = calculateBearing(req.body.position, destinationLatLong);
+        const distance = calculateDistance(req.body.position, destinationLatLong);
 
         User.find().limit(20).then((response) => {
-          res.send({ bearing: bearing, desires: response, name: name });
+          res.send({ bearing: bearing, desires: response, name: name, distance: distance });
         }).catch((err) => {
           console.log('err finding desires in db: ', err)
-          res.send({ bearing: bearing, desires: [] });
+          res.send({ bearing: bearing, desires: [], name: name, distance: distance });
         })
 
     }).catch((err) => {

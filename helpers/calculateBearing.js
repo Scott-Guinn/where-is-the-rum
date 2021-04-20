@@ -1,4 +1,5 @@
 const calculateBearing = (pointA, pointB) => {
+  console.log('calculate bearing - pointA: ', pointA, 'pointB: ', pointB);
   // Converts from degrees to radians.
   function toRadians(degrees) {
     return degrees * Math.PI / 180;
