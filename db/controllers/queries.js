@@ -25,6 +25,10 @@ const getNearest = (req, res) => {
   const query = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=${API_KEY}&input="${wantMost}"&inputtype=textquery&fields=formatted_address,name,geometry&locationbias=point:${lat},${lng}`;
 
   axios.get(query)
+  console.log('Inputs from client:');
+  console.log('api_key: ', API_KEY);
+  console.log('wantMost: ', wantMost);
+  console.log('lat: ', lat, 'lng: ', lng);
     .then((response) => {
       console.log('data from GOOGLE: ', response.data.candidates[0]);
         const name = response.data.candidates[0].name;
