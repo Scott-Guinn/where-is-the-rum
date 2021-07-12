@@ -1,3 +1,4 @@
+// haversine formula
 const calculateDistance = (pointA, pointB) => {
   console.log('calculateDistance has been called - pointA: ', pointA, 'pointB: ', pointB);
   // returns distance between point A and point B in meters
